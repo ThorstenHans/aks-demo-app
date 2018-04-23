@@ -1,0 +1,6 @@
+Sessions*/bin/
+Sessions*/obj/
+Votings*/bin/
+Votings*/obj/
+.idea/
+*.user

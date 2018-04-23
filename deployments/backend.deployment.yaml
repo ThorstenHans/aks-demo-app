@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: sessions-api
+    labels:
+        tier: backend
+        app: sessions
+        ms: sessions
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+         app: sessions
+         tier: backend
+         ms: sessions
+    template:
+        metadata:
+            name: sessions-ms
+            labels:
+                app: sessions
+                tier: backend
+                ms: sessions
+        spec:
+            containers:
+                - name: sesssions-microservice
+                  image: thhdemo.azurecr.io/sessions-api:1.0.0
+                  env:
+                    - name: ASPNETCORE_URLS
+                      value: http://*:8080
+                    - name: DbConnectionString
+                      valueFrom:
+                        secretKeyRef:
+                          name: backendsecret
+                          key: db
+                  ports:
+                    - containerPort: 8080
+                  livenessProbe:
+                    httpGet:
+                      path: /api/meta/healthy
+                      port: 8080
+                    initialDelaySeconds: 30
+                    timeoutSeconds: 4
+                    periodSeconds: 5
+                  readinessProbe:
+                    httpGet:
+                      path: /api/meta/ready
+                      port: 8080
+                    initialDelaySeconds: 30
+                    timeoutSeconds: 4
+                    periodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: votings-api
+    labels:
+        tier: backend
+        app: sessions
+        ms: votings
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+         app: sessions
+         tier: backend
+         ms: votings
+    template:
+        metadata:
+            name: votings-ms
+            labels:
+                app: sessions
+                tier: backend
+                ms: votings
+        spec:
+            containers:
+                - name: votings-microservice
+                  image: thhdemo.azurecr.io/votings-api:1.0.0
+                  env:
+                    - name: ASPNETCORE_URLS
+                      value: http://*:8080
+                    - name: DbConnectionString
+                      valueFrom:
+                        secretKeyRef:
+                          name: backendsecret
+                          key: db
+                  ports:
+                    - containerPort: 8080
+                  livenessProbe:
+                    httpGet:
+                      path: /api/meta/healthy
+                      port: 8080
+                    initialDelaySeconds: 30
+                    timeoutSeconds: 4
+                    periodSeconds: 5
+                  readinessProbe:
+                    httpGet:
+                      path: /api/meta/ready
+                      port: 8080
+                    initialDelaySeconds: 30
+                    timeoutSeconds: 4
+                    periodSeconds: 5

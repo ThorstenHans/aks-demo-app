@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: sessions-ms-svc
+spec:
+    selector:
+        app: sessions
+        tier: backend
+        ms: sessions
+    ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: votings-ms-svc
+spec:
+    selector:
+        app: sessions
+        tier: backend
+        ms: votings
+    ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sessions-spa-svc
+spec:
+  type: LoadBalancer
+  selector:
+      app: sessions
+      tier: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

@@ -1,0 +1,5 @@
+<h5>Browse all sessions</h5>
+<div class="d-flex flex-row-reverse">
+  <button class="btn btn-primary" type="button" (click)="navigateToCreate()">Create a new Session</button>
+</div>
+<sessions-sessioncard *ngFor="let session of sessions" [session]="session"></sessions-sessioncard>

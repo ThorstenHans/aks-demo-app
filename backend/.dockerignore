@@ -1,0 +1,9 @@
+Sessions.Migrations/
+Sessions.API/bin/
+Sessions.API/obj/
+Sessions.AuditLogCleaner/bin/
+Sessions.AuditLogCleaner/obj/
+Sessions.Models/bin/
+Sessions.Models/obj/
+SessionsVoting.API/bin/
+SessionsVoting.API/obj/

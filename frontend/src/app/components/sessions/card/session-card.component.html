@@ -1,0 +1,23 @@
+<div class="card m-3 w-90">
+  <div class="card-body">
+    <h5 class="card-title">{{session.title}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{session.speaker}} @ {{session.conference}}</h6>
+    <p class="card-text">{{session.abstract}}
+      <br/>
+      <small>Level: {{session.level}}</small>
+    </p>
+    <a href="" class="card-link" (click)="showDetails()">Show Details</a>
+  </div>
+  <div class="card-footer text-muted">
+    <div class="float-right" *ngIf="votingSummary">
+      <div class="down-vote" (click)="voteDown()">
+        <span>{{votingSummary.downVotes}}</span>
+        <i class="fa fa-thumbs-down margin-right-wide"></i>
+      </div>
+      <div class="up-vote" (click)="voteUp()">
+        <span>{{votingSummary.upVotes}}</span>
+        <i class="fa fa-thumbs-up"></i>
+      </div>
+    </div>
+  </div>
+</div>

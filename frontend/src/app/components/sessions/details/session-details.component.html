@@ -1,0 +1,68 @@
+<form [formGroup]="session" (ngSubmit)="onSubmit()">
+  <div class="form-group row">
+    <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" [ngClass]="{'is-invalid':title.invalid&& (title.dirty || title.touched) }" id="inputTitle"
+        placeholder="Session Title" formControlName="title">
+      <div class="invalid-feedback" *ngIf="title.invalid && (title.dirty || title.touched) && title.errors['required']">
+        Please provide a title
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputSpeaker" class="col-sm-2 col-form-label">Speaker</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputSpeaker" [ngClass]="{'is-invalid':speaker.invalid && (speaker.dirty || speaker.touched)}"
+        placeholder="Speaker(s)" formControlName="speaker">
+      <div class="invalid-feedback" *ngIf="speaker.invalid && (speaker.dirty || speaker.touched)&& speaker.errors['required']">
+        Please provide a speaker name
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputConference" class="col-sm-2 col-form-label">Conference</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputConference" [ngClass]="{'is-invalid':conference.invalid && (conference.dirty || conference.touched)}"
+        placeholder="Conference" formControlName="conference">
+      <div class="invalid-feedback" *ngIf="conference.invalid && (conference.dirty || conference.touched)&& conference.errors['required']">
+        Please provide a conference name
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputAbstract" class="col-sm-2 col-form-label">Abstract</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" [ngClass]="{'is-invalid':abstract.invalid && (abstract.dirty || abstract.touched)}" id="inputAbstraact"
+        formControlName="abstract" rows="10"></textarea>
+      <div class="invalid-feedback" *ngIf="abstract.invalid && (abstract.dirty || abstract.touched)&& abstract.errors['required']">
+        Please provide an abstract
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputLevel" class="col-sm-2 col-form-label">Level</label>
+    <div class="col-sm-10">
+      <select class="form-control" id="inputLevel" formControlName="level">
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="300">300</option>
+        <option value="400">400</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputAudience" class="col-sm-2 col-form-label">Audience</label>
+    <div class="col-sm-10">
+      <select class="form-control" id="inputAudience" formControlName="audience">
+        <option value="0">Developer</option>
+        <option value="1">IT-Pro</option>
+        <option value="2">All</option>
+      </select>
+    </div>
+  </div>
+  <div class="float-right">
+    <button class="btn" type="button" routerLink="/sessions/list">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="deleteSession()">Delete Session</button>
+    <button class=" btn btn-primary " type="submit ">Submit form</button>
+  </div>
+</form>

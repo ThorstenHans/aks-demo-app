@@ -1,0 +1,24 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+    name: sessions-auditlog-cleaner
+    labels:
+        app: sessions
+spec:
+    schedule: "* * * * *"
+    jobTemplate:
+        spec:
+            template:
+                spec:
+                    restartPolicy: Never
+                    containers:
+                        - name: sessions-auditlog-cleaner
+                          image: thhdemo.azurecr.io/sessions-auditlog-cleaner:1.0.0
+                          env:
+                            - name: DbConnectionString
+                              valueFrom:
+                                secretKeyRef:
+                                  name: backendsecret
+                                  key: db
+
+

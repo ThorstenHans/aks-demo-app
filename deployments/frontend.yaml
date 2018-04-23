@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: sessions-spa
+    labels:
+        app: sessions
+spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: sessions
+        tier: frontend
+    template:
+      metadata:
+        name: sessions-spa
+        labels:
+          app: sessions
+          tier: frontend
+      spec:
+        containers:
+          - name: spa
+            image: thhdemo.azurecr.io/sessions-spa:1.0.0
+            ports:
+              - containerPort: 80
+            livenessProbe:
+              httpGet:
+                path: /
+                port: 80
+              initialDelaySeconds: 7
+              periodSeconds: 5
+            readinessProbe:
+              httpGet:
+                path: /api/meta/ready
+                port: 80
+              initialDelaySeconds: 2
+              periodSeconds: 5
+
+
+
