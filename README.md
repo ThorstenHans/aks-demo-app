@@ -12,6 +12,8 @@ This app is for demonstration purpose. It's a small app consisting of four main 
 * SQL Server on Azure
   * Database can be generated using `/backend/Sessions.Migrations/` (.NET Core Executable) see _Generating the Database_
 * AKS instance
+  * Kubernets version at least `1.9`
+  * if your k8s is older, either upgrade or modify `apiVersion` for deployments in `.yaml` to `apps/v1beta2`
 * ACR instance
 * latest Azure CLI installed
 * kubectl installed and configured to use AKS instance
@@ -68,4 +70,12 @@ deployment $ kubectl create -f services.deployment.yaml
 deployment $ kubectl create -f backend.deployment.yaml
 deployment $ kubectl create -f frontend.deployment.yaml
 deployment $ kubectl create -f cron.deployment.yaml
+```
+
+# Scale deployments
+
+```
+$ kubectl scale deployment sessions-api --replicas 5
+$ kubectl scale deployment votings-api --replicas 5
+$ kubectl scale deployment sessions-spa --replicas 3
 ```

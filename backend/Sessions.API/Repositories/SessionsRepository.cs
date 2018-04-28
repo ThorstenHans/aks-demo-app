@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sessions.API.Database;
+using Sessions.API.Repositories.Contracts;
 using Sessions.Models;
 
 namespace Sessions.API.Repositories

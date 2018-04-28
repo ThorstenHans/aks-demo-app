@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Sessions.Models;
 using SessionsVoting.API.Models;
 using SessionsVoting.API.Services;
@@ -22,9 +23,13 @@ namespace SessionsVoting.API.Controllers
         [HttpGet]
         public IActionResult GetVotingSummary(Guid sessionId)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (sessionId == Guid.Empty)
             {
-                return BadRequest();
+                return BadRequest("SessionId is an empty Guid");
             }
             try
             {
@@ -48,6 +53,10 @@ namespace SessionsVoting.API.Controllers
         [HttpPost]
         public IActionResult Vote(Guid sessionId, [FromBody] VotingModel votingModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (sessionId == Guid.Empty || votingModel == null)
             {
                 return BadRequest();

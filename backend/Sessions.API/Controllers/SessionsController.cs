@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Sessions.Models;
 using Sessions.API.Repositories;
+using Sessions.API.Repositories.Contracts;
 
 namespace Sessions.API.Controllers
 {
@@ -48,6 +49,10 @@ namespace Sessions.API.Controllers
         [ProducesResponseType(500)]
         public IActionResult GetSessionById(Guid id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 var session = Repository.GetSessionById(id);
@@ -65,9 +70,13 @@ namespace Sessions.API.Controllers
         [ProducesResponseType(400)]
         public IActionResult Create([FromBody] Session session)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (session == null)
             {
-                return BadRequest();
+                return BadRequest("Sesssion Model is Null");
             }
             var newSession = Repository.AddSession(session);
             return StatusCode(201, newSession);
@@ -81,9 +90,19 @@ namespace Sessions.API.Controllers
         [ProducesResponseType(404)]
         public IActionResult Update(Guid id, [FromBody] Session session)
         {
-            if (id == Guid.Empty || session == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
+            }
+
+            if (id == Guid.Empty)
+            {
+                return BadRequest("Guid is empty.");
+            }
+
+            if (session == null)
+            {
+                return BadRequest("Session instance is null");
             }
 
             try
@@ -105,9 +124,13 @@ namespace Sessions.API.Controllers
         [ProducesResponseType(500)]
         public IActionResult Delete(Guid id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (id == Guid.Empty)
             {
-                return BadRequest();
+                return BadRequest("Guid is empty.");
             }
 
             try

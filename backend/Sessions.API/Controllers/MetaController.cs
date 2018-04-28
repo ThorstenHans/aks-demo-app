@@ -1,17 +1,18 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Sessions.API.Repositories;
 
 namespace Sessions.API.Controllers
 {
-    [Produces("application/json")]
     [Route("api/meta")]
     public class MetaController : Controller
     {
-        protected IMetaRepository Repository { get; }
-        public MetaController(IMetaRepository repository)
+        private ILogger<MetaController> Logger { get; }
+        
+        public MetaController(ILogger<MetaController> logger)
         {
-            Repository = repository;
+            Logger = logger;
         }
 
         /// <summary>
@@ -21,17 +22,16 @@ namespace Sessions.API.Controllers
         /// Sample Request:
         ///     GET /ready 
         /// </remarks>
-        /// <returns>An object containing ConnectionState</returns>
-        /// <response code="200">Result object with connectionState</response>
-        /// <response code="500">Error if database can't be accessed</response>
+        /// <response code="200">Nothing more</response>
         [HttpGet]
         [Route("ready")]
         public IActionResult IsReady()
         {
             try
             {
-                var state = Repository.GetConnectionState();
-                return Ok(new {ConnectionState = state});
+                Logger.LogDebug("IsReady invoked");
+                
+                return Ok();
             }
             catch (Exception exception)
             {
@@ -46,17 +46,15 @@ namespace Sessions.API.Controllers
         /// Sample Request:
         ///     GET /healthy 
         /// </remarks>
-        /// <returns>An object containing AuditLogCount</returns>
-        /// <response code="200">Result object with AuditLogCount</response>
-        /// <response code="500">Error if database can't be accessed</response>
+        /// <response code="200">Nothing more</response>
         [HttpGet]
         [Route("healthy")]
         public IActionResult IsHealthy()
         {
             try
             {
-                var logCount = Repository.GetAuditLogCount();
-                return Ok(new {AuditLogCount = logCount});
+                Logger.LogDebug("IsHealthy invoked");
+                return Ok();
             }
             catch (Exception exception)
             {

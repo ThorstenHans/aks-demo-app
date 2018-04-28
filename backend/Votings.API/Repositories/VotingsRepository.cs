@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sessions.Models;
 using SessionsVoting.API.Database;
+using SessionsVoting.API.Repositories.Contracts;
 
 namespace SessionsVoting.API.Repositories
 {
     public class VotingsRepository : IVotingsRepository
-    { 
-        protected VotingsContext Context { get; }
+    {
+        private VotingsContext Context { get; }
 
         public VotingsRepository(VotingsContext context)
         {

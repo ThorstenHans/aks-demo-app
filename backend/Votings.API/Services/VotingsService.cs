@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sessions.Models;
 using SessionsVoting.API.Repositories;
+using SessionsVoting.API.Repositories.Contracts;
 
 namespace SessionsVoting.API.Services
 {
     public class VotingsService: IVotingsService
     {
-        protected ISessionsRepository SessionsRepository { get; }
-        protected IVotingsRepository VotingsRepository { get; }
+        private ISessionsRepository SessionsRepository { get; }
+        private IVotingsRepository VotingsRepository { get; }
 
         public VotingsService(IVotingsRepository votingsRepository, ISessionsRepository sessionsRepository)
         {

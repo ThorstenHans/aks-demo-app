@@ -10,21 +10,14 @@ namespace SessionsVoting.API.Controllers
     [Route("api/meta")]
     public class MetaController : Controller
     {
-        protected IMetaRepository Repository { get; }
-
-        public MetaController(IMetaRepository repository)
-        {
-            Repository = repository;
-        }
-
+       
         [HttpGet]
         [Route("ready")]
         public IActionResult IsReady()
         {
             try
             {
-                var state = Repository.GetConnectionState();
-                return Ok(new {ConnectionState = state});
+                return Ok();
             }
             catch (Exception exception)
             {
@@ -38,8 +31,7 @@ namespace SessionsVoting.API.Controllers
         {
             try
             {
-                var votingsCount = Repository.GetVotingsCount();
-                return Ok(new {VotingsCount = votingsCount});
+                return Ok();
             }
             catch (Exception exception)
             {

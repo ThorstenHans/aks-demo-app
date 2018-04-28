@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Sessions.Models;
 
-namespace SessionsVoting.API.Repositories
+namespace SessionsVoting.API.Repositories.Contracts
 {
     public interface IVotingsRepository
     {

@@ -23,7 +23,7 @@ spec:
         spec:
             containers:
                 - name: sesssions-microservice
-                  image: thhdemo.azurecr.io/sessions-api:0.0.3
+                  image: thhdemo.azurecr.io/sessions-api:0.0.7
                   env:
                     - name: ASPNETCORE_URLS
                       value: http://*:8080
@@ -48,6 +48,13 @@ spec:
                     initialDelaySeconds: 30
                     timeoutSeconds: 4
                     periodSeconds: 5
+                  resources:
+                    requests:
+                      memory: "64Mi"
+                      cpu: "64m"
+                    limits:
+                      memory: "96Mi"
+                      cpu: "125m"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -74,7 +81,7 @@ spec:
         spec:
             containers:
                 - name: votings-microservice
-                  image: thhdemo.azurecr.io/votings-api:0.0.2
+                  image: thhdemo.azurecr.io/votings-api:0.0.3
                   env:
                     - name: ASPNETCORE_URLS
                       value: http://*:8080
@@ -99,3 +106,10 @@ spec:
                     initialDelaySeconds: 30
                     timeoutSeconds: 4
                     periodSeconds: 5
+                  resources:
+                    requests:
+                      memory: "64Mi"
+                      cpu: "64m"
+                    limits:
+                      memory: "96Mi"
+                      cpu: "125m"

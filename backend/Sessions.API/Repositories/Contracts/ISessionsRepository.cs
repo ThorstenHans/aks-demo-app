@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Sessions.Models;
 
-namespace Sessions.API.Repositories
+namespace Sessions.API.Repositories.Contracts
 {
     public interface ISessionsRepository
     {
