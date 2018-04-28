@@ -7,7 +7,7 @@ metadata:
         app: sessions
         ms: sessions
 spec:
-    replicas: 1
+    replicas: 3
     selector:
         matchLabels:
          app: sessions
@@ -23,7 +23,7 @@ spec:
         spec:
             containers:
                 - name: sesssions-microservice
-                  image: thhdemo.azurecr.io/sessions-api:1.0.0
+                  image: thhdemo.azurecr.io/sessions-api:0.0.3
                   env:
                     - name: ASPNETCORE_URLS
                       value: http://*:8080
@@ -58,7 +58,7 @@ metadata:
         app: sessions
         ms: votings
 spec:
-    replicas: 1
+    replicas: 3
     selector:
         matchLabels:
          app: sessions
@@ -74,7 +74,7 @@ spec:
         spec:
             containers:
                 - name: votings-microservice
-                  image: thhdemo.azurecr.io/votings-api:1.0.0
+                  image: thhdemo.azurecr.io/votings-api:0.0.2
                   env:
                     - name: ASPNETCORE_URLS
                       value: http://*:8080
