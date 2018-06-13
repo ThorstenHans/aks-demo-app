@@ -6,6 +6,7 @@ import { SessionsService } from '../../../services/sessions.service';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { SessionResolver } from '../../../resolvers/session.resolver';
+import { ExportService } from '../../../services/export.service';
 
 @Component({
   selector: 'sessions-sessiondetails',
@@ -17,6 +18,7 @@ export class SessionDetailsComponent implements OnInit {
   constructor(
     private readonly _formBuilder: FormBuilder,
     private readonly _sessionsService: SessionsService,
+    private readonly _exportService: ExportService,
     private readonly _router: Router,
     private readonly _route: ActivatedRoute
   ) {}
@@ -30,6 +32,7 @@ export class SessionDetailsComponent implements OnInit {
       id: new FormControl({ value: this.sessionObject.id, disabled: true }),
       upVotes: new FormControl({ value: this.sessionObject.upVotes, disabled: true }),
       downVotes: new FormControl({ value: this.sessionObject.downVotes, disabled: true }),
+      mail: new FormControl({ value: null, disabled: false }),
       title: new FormControl(
         {
           value: this.sessionObject.title,
@@ -89,6 +92,10 @@ export class SessionDetailsComponent implements OnInit {
     const sessionModel = Session.fromFormModel(this.session.value);
 
     this._sessionsService.createSession(sessionModel).subscribe(() => this._navigateToList());
+  }
+
+  public getAsPdf() {
+    this._exportService.generatePdf(this.sessionObject.id, this.session.value.mail).subscribe();
   }
 
   public deleteSession(): void {

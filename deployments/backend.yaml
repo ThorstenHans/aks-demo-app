@@ -113,3 +113,56 @@ spec:
                     limits:
                       memory: "96Mi"
                       cpu: "125m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: export-api
+    labels:
+        tier: backend
+        app: sessions
+        ms: export
+spec:
+    replicas: 3
+    selector:
+        matchLabels:
+         app: sessions
+         tier: backend
+         ms: export
+    template:
+        metadata:
+            name: export-ms
+            labels:
+                app: sessions
+                tier: backend
+                ms: export
+        spec:
+            containers:
+                - name: export-microservice
+                  image: thhdemo.azurecr.io/export-api:0.0.1
+                  env:
+                    - name: ASPNETCORE_URLS
+                      value: http://*:8080
+                  ports:
+                    - containerPort: 8080
+                  livenessProbe:
+                    httpGet:
+                      path: /api/meta/healthy
+                      port: 8080
+                    initialDelaySeconds: 30
+                    timeoutSeconds: 4
+                    periodSeconds: 5
+                  readinessProbe:
+                    httpGet:
+                      path: /api/meta/ready
+                      port: 8080
+                    initialDelaySeconds: 30
+                    timeoutSeconds: 4
+                    periodSeconds: 5
+                  resources:
+                    requests:
+                      memory: "64Mi"
+                      cpu: "64m"
+                    limits:
+                      memory: "96Mi"
+                      cpu: "125m"

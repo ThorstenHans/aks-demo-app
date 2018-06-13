@@ -62,7 +62,20 @@
   </div>
   <div class="float-right">
     <button class="btn" type="button" routerLink="/sessions/list">Cancel</button>
-    <button type="button" class="btn btn-danger" (click)="deleteSession()">Delete Session</button>
-    <button class=" btn btn-primary " type="submit ">Submit form</button>
+    <button class="btn btn-danger" type="button" (click)="deleteSession()">Delete Session</button>
+    <button class="btn btn-primary" type="submit">Submit form</button>
   </div>
 </form>
+
+<div class="card">
+  <div class="card-header">
+    Get as PDF
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Get this abstract as PDF</h5>
+    <p class="card-text">
+      <input type="text" class="form-control" id="mail" placeholder="john.smith@mail.com" formControlName="mail" />
+    </p>
+    <button class="btn btn-secondary" type="button" (click)="getAsPdf()">Give me that PDF</button>
+  </div>
+</div>

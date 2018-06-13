@@ -20,5 +20,3 @@ spec:
                                 secretKeyRef:
                                   name: backendsecret
                                   key: db
-
-
