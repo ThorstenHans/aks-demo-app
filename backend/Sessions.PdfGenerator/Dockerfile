@@ -5,5 +5,5 @@ RUN npm install
 
 COPY . .
 
-CMD ["sh"]
+CMD ["npm", "start"]
 

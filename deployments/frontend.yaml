@@ -19,7 +19,7 @@ spec:
       spec:
         containers:
           - name: spa
-            image: thhdemo.azurecr.io/sessions-spa:0.0.16
+            image: thhdemo.azurecr.io/sessions-spa:0.0.20
             ports:
               - containerPort: 80
             livenessProbe:

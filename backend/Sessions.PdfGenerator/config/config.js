@@ -25,16 +25,15 @@ class Config {
 
 const readConfig = () => {
     return new Config(
-        process.env['AZ_SESSION_STORAGE']
-        process.env['AZ_SESSION_STORAGE_KEY']
+        process.env['AZ_SESSION_STORAGE'],
+        process.env['AZ_SESSION_STORAGE_KEY'],
         process.env['SQL_AZ_HOST'],
         process.env['SQL_AZ_USER'],
-        process.env['AZ_SQL_PWD']
+        process.env['AZ_SQL_PWD'],
         process.env['MAILGUN_DOMAIN'],
         process.env['MAILGUN_API_KEY'],
         process.env['SESSION_ID'],
         process.env['RECIPIENT_MAIL_ADDR']
-        'thorsten.hans@thinktecture.com'
     );
 };
 
