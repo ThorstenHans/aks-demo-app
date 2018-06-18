@@ -4,8 +4,8 @@ resource "azurerm_resource_group" "demo" {
     name = "${var.resource_group_name}"
     location = "West Europe"
     tags {
-        responsible = "${var.responsible_name}"
-        environment = "demo"
+        responsible = "${var.tag_value_responsible}"
+        environment = "${var.tag_value_environment}"
     }
 }
 
@@ -13,8 +13,8 @@ resource "azurerm_resource_group" "demoaks" {
     name = "${var.aks_resource_group_name}"
     location = "West Europe"
     tags {
-        responsible = "${var.responsible_name}"
-        environment = "demo"
+        responsible = "${var.tag_value_responsible}"
+        environment = "${var.tag_value_environment}"
     }
 }
 
@@ -26,8 +26,8 @@ resource "azurerm_sql_server" "demo" {
     administrator_login = "testadmin"
     administrator_login_password = "thisIsSuperSecur3!"
     tags {
-        responsible = "${var.responsible_name}"
-        environment = "demo"
+        responsible = "${var.tag_value_responsible}"
+        environment = "${var.tag_value_environment}"
     }
 }
 resource "azurerm_sql_database" "demo" {
@@ -35,18 +35,24 @@ resource "azurerm_sql_database" "demo" {
     resource_group_name = "${azurerm_resource_group.demo.name}"
     location = "${azurerm_resource_group.demo.location}"
     server_name = "${azurerm_sql_server.demo.name}"
+    
     tags {
-        responsible = "${var.responsible_name}"
-        environment = "demo"
+        responsible = "${var.tag_value_responsible}"
+        environment = "${var.tag_value_environment}"
     }
 }
 
 resource "azurerm_container_registry" "test" {
-  name                = "${var.acr_name}"
-  resource_group_name = "${azurerm_resource_group.demo.name}"
-  location            = "${azurerm_resource_group.demo.location}"
-  admin_enabled       = false
-  sku                 = "${var.acr_sku}"
+    name                = "${var.acr_name}"
+    resource_group_name = "${azurerm_resource_group.demo.name}"
+    location            = "${azurerm_resource_group.demo.location}"
+    admin_enabled       = false
+    sku                 = "${var.acr_sku}"
+
+    tags {
+        responsible = "${var.tag_value_responsible}"
+        environment = "${var.tag_value_environment}"
+    }
 }
 
 resource "azurerm_kubernetes_cluster" "demo" {
@@ -78,8 +84,8 @@ resource "azurerm_kubernetes_cluster" "demo" {
     }
 
     tags {
-        responsible = "${var.responsible_name}"
-        environment = "demo"
+        responsible = "${var.tag_value_responsible}"
+        environment = "${var.tag_value_environment}"
     }
 
 }

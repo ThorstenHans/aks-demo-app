@@ -17,9 +17,14 @@ variable "resource_group_name" {
 variable "aks_resource_group_name" {
     type = "string"
 }
-
-variable "responsible_name" {
+ 
+variable "tag_value_responsible" {
     type = "string"
+}
+
+variable "tag_value_environment" {
+    type = "string"
+    default = "demo"
 }
 
 variable "acr_name" {
