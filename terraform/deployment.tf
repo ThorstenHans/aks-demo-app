@@ -3,19 +3,13 @@ provider "azurerm" { }
 resource "azurerm_resource_group" "demo" {
     name = "${var.resource_group_name}"
     location = "West Europe"
-    tags {
-        responsible = "${var.tag_value_responsible}"
-        environment = "${var.tag_value_environment}"
-    }
+    tags = "${var.tags}"
 }
 
 resource "azurerm_resource_group" "demoaks" {
     name = "${var.aks_resource_group_name}"
     location = "West Europe"
-    tags {
-        responsible = "${var.tag_value_responsible}"
-        environment = "${var.tag_value_environment}"
-    }
+    tags = "${var.tags}"
 }
 
 resource "azurerm_sql_server" "demo" {
@@ -25,21 +19,14 @@ resource "azurerm_sql_server" "demo" {
     version = "12.0"
     administrator_login = "testadmin"
     administrator_login_password = "thisIsSuperSecur3!"
-    tags {
-        responsible = "${var.tag_value_responsible}"
-        environment = "${var.tag_value_environment}"
-    }
+    tags = "${var.tags}"
 }
 resource "azurerm_sql_database" "demo" {
     name = "sessions"
     resource_group_name = "${azurerm_resource_group.demo.name}"
     location = "${azurerm_resource_group.demo.location}"
     server_name = "${azurerm_sql_server.demo.name}"
-    
-    tags {
-        responsible = "${var.tag_value_responsible}"
-        environment = "${var.tag_value_environment}"
-    }
+    tags = "${var.tags}"
 }
 
 resource "azurerm_container_registry" "test" {
@@ -48,11 +35,7 @@ resource "azurerm_container_registry" "test" {
     location            = "${azurerm_resource_group.demo.location}"
     admin_enabled       = false
     sku                 = "${var.acr_sku}"
-
-    tags {
-        responsible = "${var.tag_value_responsible}"
-        environment = "${var.tag_value_environment}"
-    }
+    tags = "${var.tags}"
 }
 
 resource "azurerm_kubernetes_cluster" "demo" {
@@ -82,11 +65,7 @@ resource "azurerm_kubernetes_cluster" "demo" {
         client_id = "${var.service_principal_id}"
         client_secret = "${var.service_principal_password}"
     }
-
-    tags {
-        responsible = "${var.tag_value_responsible}"
-        environment = "${var.tag_value_environment}"
-    }
+    tags = "${var.tags}"
 
 }
 

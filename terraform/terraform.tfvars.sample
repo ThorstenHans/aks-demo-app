@@ -3,8 +3,10 @@ service_principal_password="00000000-0000-0000-0000-000000000000"
 ssh_public_key="~/.ssh/id_rsa.pub"
 resource_group_name="sample-rg"
 aks_resource_group_name="sample-rg-aks"
-tag_value_responsible="Thorsten Hans"
-tag_value_environment="Sample Environment"
+tags = {
+    Responsible = "Thorsten Hans"
+    Environment = "Sample Environment"
+}
 aks_name="sampleaks"
 acr_name="sampleacr"
 acr_sku="Basic"

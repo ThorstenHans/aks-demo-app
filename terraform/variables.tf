@@ -17,15 +17,14 @@ variable "resource_group_name" {
 variable "aks_resource_group_name" {
     type = "string"
 }
- 
-variable "tag_value_responsible" {
-    type = "string"
-}
 
-variable "tag_value_environment" {
-    type = "string"
-    default = "demo"
-}
+variable "tags" {
+    type = "map"
+    default = {
+        Environment = "Demo"
+        Responsible = "Thorsten Hans"
+    }
+} 
 
 variable "acr_name" {
     type = "string"
