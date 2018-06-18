@@ -29,20 +29,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-    name: export-ms-svc
-spec:
-    selector:
-        app: sessions
-        tier: backend
-        ms: export
-    ports:
-        - protocol: TCP
-          port: 80
-          targetPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
   name: sessions-spa-svc
 spec:
   type: LoadBalancer
