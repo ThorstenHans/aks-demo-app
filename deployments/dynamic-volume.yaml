@@ -1,0 +1,26 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+    name: cron-logger
+spec:
+    schedule: '* * * * *'
+    jobTemplate:
+        spec:
+            template:
+                spec:
+                    restartPolicy: OnFailure
+                    containers:
+                        - name: cron-based-logger
+                          image: thhtalks.azurecr.io/logs:latest
+                          env:
+                              - name: CronJobOutputFolder
+                                value: '/var/cron-logs'
+                          volumeMounts:
+                              - mountPath: '/var/cron-logs'
+                                name: azure-file-share
+                    volumes:
+                        - name: azure-file-share
+                          azureFile:
+                              secretName: azure-secret
+                              shareName: logs
+                              readOnly: false

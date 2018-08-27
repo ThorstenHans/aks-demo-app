@@ -5,43 +5,27 @@ metadata:
     labels:
         app: sessions
 spec:
-    replicas: 2
+    replicas: 1
     selector:
-      matchLabels:
-        app: sessions
-        tier: frontend
+        matchLabels:
+            app: sessions
+            tier: frontend
     template:
-      metadata:
-        name: sessions-spa
-        labels:
-          app: sessions
-          tier: frontend
-      spec:
-        containers:
-          - name: spa
-            image: thhdemo.azurecr.io/sessions-spa:0.0.20
-            ports:
-              - containerPort: 80
-            livenessProbe:
-              httpGet:
-                path: /
-                port: 80
-              initialDelaySeconds: 7
-              periodSeconds: 5
-            readinessProbe:
-              httpGet:
-                path: /api/meta/ready
-                port: 80
-              initialDelaySeconds: 2
-              periodSeconds: 5
-            resources:
-                requests:
-                    memory: "32Mi"
-                    cpu: "64m"
-                limits:
-                    memory: "64Mi"
-                    cpu: "125m"
-
-
-
-
+        metadata:
+            name: sessions-spa
+            labels:
+                app: sessions
+                tier: frontend
+        spec:
+            containers:
+                - name: spa
+                  image: thhtalks.azurecr.io/frontend:latest
+                  ports:
+                      - containerPort: 80
+                  resources:
+                      requests:
+                          memory: '32Mi'
+                          cpu: '64m'
+                      limits:
+                          memory: '64Mi'
+                          cpu: '125m'

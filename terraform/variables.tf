@@ -10,11 +10,11 @@ variable "ssh_public_key" {
   type = "string"
 }
 
-variable "resource_group_name" {
+variable "aks_dns_prefix" {
   type = "string"
 }
 
-variable "aks_resource_group_name" {
+variable "resource_group_name" {
   type = "string"
 }
 
@@ -33,7 +33,7 @@ variable "acr_name" {
 
 variable "acr_sku" {
   type    = "string"
-  default = "Basic"
+  default = "Standard"
 }
 
 variable "aks_name" {

@@ -12,10 +12,10 @@ export class SessionsServiceRef extends SessionsService {
   }
 
   public getAllSessions(): Observable<Array<Session>> {
-    return this._http.get<Array<Session>>('api/sessions');
+    return this._http.get<Array<Session>>('http://localhost:8081/api/sessions');
   }
   public getSessionById(sessionId: string): Observable<Session> {
-    return this._http.get<Session>(`api/sessions/${sessionId}`);
+    return this._http.get<Session>(`http://localhost:8081/api/sessions/${sessionId}`);
   }
 
   public deleteSession(sessionId: string): Observable<any> {

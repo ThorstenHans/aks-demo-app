@@ -10,9 +10,9 @@ spec:
     replicas: 3
     selector:
         matchLabels:
-         app: sessions
-         tier: backend
-         ms: sessions
+            app: sessions
+            tier: backend
+            ms: sessions
     template:
         metadata:
             name: sessions-ms
@@ -23,38 +23,38 @@ spec:
         spec:
             containers:
                 - name: sesssions-microservice
-                  image: thhdemo.azurecr.io/sessions-api:0.0.7
+                  image: thhtalks.azurecr.io/sessions:latest
                   env:
-                    - name: ASPNETCORE_URLS
-                      value: http://*:8080
-                    - name: DbConnectionString
-                      valueFrom:
-                        secretKeyRef:
-                          name: backendsecret
-                          key: db
+                      - name: ASPNETCORE_URLS
+                        value: http://*:8080
+                      - name: DbConnectionString
+                        valueFrom:
+                            secretKeyRef:
+                                name: backendsecret
+                                key: db
                   ports:
-                    - containerPort: 8080
+                      - containerPort: 8080
                   livenessProbe:
-                    httpGet:
-                      path: /api/meta/healthy
-                      port: 8080
-                    initialDelaySeconds: 30
-                    timeoutSeconds: 4
-                    periodSeconds: 5
+                      httpGet:
+                          path: /api/meta/healthy
+                          port: 8080
+                      initialDelaySeconds: 30
+                      timeoutSeconds: 4
+                      periodSeconds: 5
                   readinessProbe:
-                    httpGet:
-                      path: /api/meta/ready
-                      port: 8080
-                    initialDelaySeconds: 30
-                    timeoutSeconds: 4
-                    periodSeconds: 5
+                      httpGet:
+                          path: /api/meta/ready
+                          port: 8080
+                      initialDelaySeconds: 30
+                      timeoutSeconds: 4
+                      periodSeconds: 5
                   resources:
-                    requests:
-                      memory: "64Mi"
-                      cpu: "64m"
-                    limits:
-                      memory: "96Mi"
-                      cpu: "125m"
+                      requests:
+                          memory: '64Mi'
+                          cpu: '64m'
+                      limits:
+                          memory: '96Mi'
+                          cpu: '125m'
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -68,9 +68,9 @@ spec:
     replicas: 3
     selector:
         matchLabels:
-         app: sessions
-         tier: backend
-         ms: votings
+            app: sessions
+            tier: backend
+            ms: votings
     template:
         metadata:
             name: votings-ms
@@ -81,36 +81,38 @@ spec:
         spec:
             containers:
                 - name: votings-microservice
-                  image: thhdemo.azurecr.io/votings-api:0.0.3
+                  image: thhtalks.azurecr.io/votings:latest
                   env:
-                    - name: ASPNETCORE_URLS
-                      value: http://*:8080
-                    - name: DbConnectionString
-                      valueFrom:
-                        secretKeyRef:
-                          name: backendsecret
-                          key: db
+                      - name: ASPNETCORE_URLS
+                        value: http://*:8080
+                      - name: DbConnectionString
+                        valueFrom:
+                            secretKeyRef:
+                                name: backendsecret
+                                key: db
                   ports:
-                    - containerPort: 8080
+                      - containerPort: 8080
                   livenessProbe:
-                    httpGet:
-                      path: /api/meta/healthy
-                      port: 8080
-                    initialDelaySeconds: 30
-                    timeoutSeconds: 4
-                    periodSeconds: 5
+                      httpGet:
+                          path: /api/meta/healthy
+                          port: 8080
+                      initialDelaySeconds: 30
+                      timeoutSeconds: 4
+                      periodSeconds: 5
                   readinessProbe:
-                    httpGet:
-                      path: /api/meta/ready
-                      port: 8080
-                    initialDelaySeconds: 30
-                    timeoutSeconds: 4
-                    periodSeconds: 5
+                      httpGet:
+                          path: /api/meta/ready
+                          port: 8080
+                      initialDelaySeconds: 30
+                      timeoutSeconds: 4
+                      periodSeconds: 5
                   resources:
-                    requests:
-                      memory: "64Mi"
-                      cpu: "64m"
-                    limits:
-                      memory: "96Mi"
-                      cpu: "125m"
+                      requests:
+                          memory: '64Mi'
+                          cpu: '64m'
+                      limits:
+                          memory: '96Mi'
+                          cpu: '125m'
+
 ---
+

@@ -6,11 +6,13 @@ resource "azurerm_resource_group" "demo" {
   tags     = "${var.tags}"
 }
 
+/*
 resource "azurerm_resource_group" "demoaks" {
-  name     = "${var.aks_resource_group_name}"
+  name     = "${var.resource_group_name}"
   location = "West Europe"
   tags     = "${var.tags}"
 }
+
 
 resource "azurerm_sql_server" "demo" {
   name                         = "thh-demo-sql-server"
@@ -29,6 +31,7 @@ resource "azurerm_sql_database" "demo" {
   server_name         = "${azurerm_sql_server.demo.name}"
   tags                = "${var.tags}"
 }
+*/
 
 resource "azurerm_container_registry" "test" {
   name                = "${var.acr_name}"
@@ -37,12 +40,13 @@ resource "azurerm_container_registry" "test" {
   admin_enabled       = false
   sku                 = "${var.acr_sku}"
   tags                = "${var.tags}"
+  depends_on          = ["azurerm_kubernetes_cluster.demo"]
 }
 
 resource "azurerm_kubernetes_cluster" "demo" {
   name                = "${var.aks_name}"
   location            = "${azurerm_resource_group.demo.location}"
-  resource_group_name = "${azurerm_resource_group.demoaks.name}"
+  resource_group_name = "${azurerm_resource_group.demo.name}"
   kubernetes_version  = "${var.k8s_version}"
 
   linux_profile {
@@ -53,7 +57,7 @@ resource "azurerm_kubernetes_cluster" "demo" {
     }
   }
 
-  dns_prefix = "thhtestprefix"
+  dns_prefix = "${var.aks_dns_prefix}"
 
   agent_pool_profile {
     name    = "default"
