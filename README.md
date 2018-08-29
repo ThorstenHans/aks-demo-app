@@ -2,29 +2,29 @@
 
 This app is for demonstration purpose. It's a small app consisting of four main components
 
-* Angular SPA
-* .NET Core 2.0 (Sessions.API)
-* .NET Core 2.0 (Votings.API)
-* .NET Core 2.0 CronJob (Sessions.AuditLogCleaner)
+-   Angular SPA
+-   .NET Core 2.0 (Sessions.API)
+-   .NET Core 2.0 (Votings.API)
+-   .NET Core 2.0 CronJob (Sessions.AuditLogCleaner)
 
 ## Requirements
 
-* SQL Server on Azure
-  * Database can be generated using `/backend/Sessions.Migrations/` (.NET Core Executable) see _Generating the Database_
-* AKS instance
-  * Kubernets version at least `1.9`
-  * if your k8s is older, either upgrade or modify `apiVersion` for deployments in `.yaml` to `apps/v1beta2`
-  * AKS' SericePrincipal needs to have access to ACR instance
-* ACR instance
-* latest Azure CLI installed [https://docs.microsoft.com/de-de/cli/azure/install-azure-cli?view=azure-cli-latest](https://docs.microsoft.com/de-de/cli/azure/install-azure-cli?view=azure-cli-latest)
-* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed and configured to use AKS instance [https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster#connect-with-kubectl](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster#connect-with-kubectl)
+-   SQL Server on Azure
+    -   Database can be generated using `/backend/Sessions.Migrations/` (.NET Core Executable) see _Generating the Database_
+-   AKS instance
+    -   Kubernets version at least `1.9`
+    -   if your k8s is older, either upgrade or modify `apiVersion` for deployments in `.yaml` to `apps/v1beta2`
+    -   AKS' SericePrincipal needs to have access to ACR instance
+-   ACR instance
+-   latest Azure CLI installed [https://docs.microsoft.com/de-de/cli/azure/install-azure-cli?view=azure-cli-latest](https://docs.microsoft.com/de-de/cli/azure/install-azure-cli?view=azure-cli-latest)
+-   [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed and configured to use AKS instance [https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster#connect-with-kubectl](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster#connect-with-kubectl)
 
 ## Generating the Database
 
-* Define a firewall exception for your local IP address on SQL Azure (SQL Server).
-* Create a new (empty) SQL Database
-* Set the connection string **temporary** as _ENVIRONMENT Variable_ with the name `DbConnectionString`
-* Execute EF Migrations (Sessions.Migrations C# Project in `/backend/Sessions.Migrations`) using VS or Rider to generate the database from the current C# model
+-   Define a firewall exception for your local IP address on SQL Azure (SQL Server).
+-   Create a new (empty) SQL Database
+-   Set the connection string **temporary** as _ENVIRONMENT Variable_ with the name `DbConnectionString`
+-   Execute EF Migrations (Sessions.Migrations C# Project in `/backend/Sessions.Migrations`) using VS or Rider to generate the database from the current C# model
 
 ## Building Docker images
 
@@ -32,12 +32,12 @@ Docker images must be generated for all four components. Replace `thhdemo.azurec
 
 ```
 $ cd backend
-backend $ docker build -t thhdemo.azurecr.io/sessions-api:1.0.0 -f sessions-ms.Dockerfile .
-backend $ docker build -t thhdemo.azurecr.io/votings-api:1.0.0 -f votings-ms.Dockerfile .
-backend $ docker build -t thhdemo.azurecr.io/sessions-cleaner:1.0.0 -f log-cleaner.Dockerfile .
+backend $ docker build -t thhdemo.azurecr.io/sessions:latest -f sessions-ms.Dockerfile .
+backend $ docker build -t thhdemo.azurecr.io/votings:latest -f votings-ms.Dockerfile .
+backend $ docker build -t thhdemo.azurecr.io/sessions-cleaner:latest -f log-cleaner.Dockerfile .
 backend $ cd ..
 cd frontend
-frontend $ docker build -t thhdemo.azurecr.io/sessions-spa:1.0.0 .
+frontend $ docker build -t thhdemo.azurecr.io/frontend:latest .
 ```
 
 ## Push images to ACR

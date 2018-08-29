@@ -1,16 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: sessions-api
-    labels:
-        tier: backend
-        app: sessions
-        ms: sessions
+    name: deployment-sessions
 spec:
     replicas: 3
     selector:
         matchLabels:
-            app: sessions
             tier: backend
             ms: sessions
     template:
@@ -23,7 +18,7 @@ spec:
         spec:
             containers:
                 - name: sesssions-microservice
-                  image: thhtalks.azurecr.io/sessions:latest
+                  image: thhdemo.azurecr.io/sessions:latest
                   env:
                       - name: ASPNETCORE_URLS
                         value: http://*:8080
@@ -59,16 +54,11 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: votings-api
-    labels:
-        tier: backend
-        app: sessions
-        ms: votings
+    name: deployment-votings
 spec:
     replicas: 3
     selector:
         matchLabels:
-            app: sessions
             tier: backend
             ms: votings
     template:
@@ -81,7 +71,7 @@ spec:
         spec:
             containers:
                 - name: votings-microservice
-                  image: thhtalks.azurecr.io/votings:latest
+                  image: thhdemo.azurecr.io/votings:latest
                   env:
                       - name: ASPNETCORE_URLS
                         value: http://*:8080

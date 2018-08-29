@@ -7,13 +7,6 @@ resource "azurerm_resource_group" "demo" {
 }
 
 /*
-resource "azurerm_resource_group" "demoaks" {
-  name     = "${var.resource_group_name}"
-  location = "West Europe"
-  tags     = "${var.tags}"
-}
-
-
 resource "azurerm_sql_server" "demo" {
   name                         = "thh-demo-sql-server"
   resource_group_name          = "${azurerm_resource_group.demo.name}"
@@ -30,8 +23,7 @@ resource "azurerm_sql_database" "demo" {
   location            = "${azurerm_resource_group.demo.location}"
   server_name         = "${azurerm_sql_server.demo.name}"
   tags                = "${var.tags}"
-}
-*/
+}*/
 
 resource "azurerm_container_registry" "test" {
   name                = "${var.acr_name}"

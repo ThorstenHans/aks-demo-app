@@ -20,11 +20,11 @@ export class VotingsServiceRef extends VotingsService {
   }
 
   public getVotingSummary(sessionId: string): Observable<VotingSummary> {
-    return this._http.get<VotingSummary>(`http://localhost:8082/api/votings/${sessionId}`);
+    return this._http.get<VotingSummary>(`api/votings/${sessionId}`);
   }
 
   private _vote(sessionId: string, change: number): Observable<boolean> {
-    return this._http.post<boolean>(`http://localhost:8082/api/votings/${sessionId}`, {
+    return this._http.post<boolean>(`api/votings/${sessionId}`, {
       change: change,
     });
   }
