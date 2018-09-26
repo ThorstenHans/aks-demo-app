@@ -1,23 +1,32 @@
-# Sessions App
+# AKS Demo App
 
-This app is for demonstration purpose. It's a small app consisting of four main components
+## A simple .NET Core / Angular application
 
--   Angular SPA
--   .NET Core 2.0 (Sessions.API)
--   .NET Core 2.0 (Votings.API)
--   .NET Core 2.0 CronJob (Sessions.AuditLogCleaner)
+`aks-demo-app` is a simple application to demonstrate basic concepts of [kubernetes](http://kubernetes.io) (k8s) and Azure Kubernetes Services (AKS). The app consists of four Docker images and a SQL database. The SQL database won't be hosted inside of k8s, instead Microsoft's PaaS offering (SQL Azure) is used. The Sample is licensed under [MIT](./LICENSE)
 
-## Requirements
+-   An Angular SPA
+-   .NET Core 2.0
+    -   An API for reading Sessions `Sessions.API`
+-   .NET Core 2.0
+    -   An API for reading votes and persisting new votes `Votings.API`
+-   .NET Core 2.0 CronJob
+    -   Which will remove old audit logs from SQL database `Sessions.AuditLogCleaner`
 
--   SQL Server on Azure
-    -   Database can be generated using `/backend/Sessions.Migrations/` (.NET Core Executable) see _Generating the Database_
--   AKS instance
-    -   Kubernets version at least `1.9`
-    -   if your k8s is older, either upgrade or modify `apiVersion` for deployments in `.yaml` to `apps/v1beta2`
-    -   AKS' SericePrincipal needs to have access to ACR instance
--   ACR instance
--   latest Azure CLI installed [https://docs.microsoft.com/de-de/cli/azure/install-azure-cli?view=azure-cli-latest](https://docs.microsoft.com/de-de/cli/azure/install-azure-cli?view=azure-cli-latest)
--   [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed and configured to use AKS instance [https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster#connect-with-kubectl](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster#connect-with-kubectl)
+## Cloud Environment
+
+For running and hosting the application, the following environment is required.
+
+    - SQL Azure
+    - Azure Container Registry (ACR)
+    - Azure Kubernetes Service (AKS)
+
+The cloud environment can be deployed using [Terraform](https://github.com/hashicorp/terraform). The subfolder `terraform` contains already the environment and can be configured according to your needs by specifying your settings in a `terraform.tfvars` file. The `terraform/terraform.tfvars.sample` contains an example configuration.
+
+## Developer Environment Requirements
+
+    - Azure CLI (`az`)
+    - Kubernetes Control (`kubectl`)
+    - Docker (`docker`)
 
 ## Generating the Database
 
