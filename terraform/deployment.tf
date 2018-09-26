@@ -25,7 +25,7 @@ resource "azurerm_sql_database" "demo" {
   tags                = "${var.tags}"
 }*/
 
-resource "azurerm_container_registry" "test" {
+resource "azurerm_container_registry" "demo" {
   name                = "${var.acr_name}"
   resource_group_name = "${azurerm_resource_group.demo.name}"
   location            = "${azurerm_resource_group.demo.location}"
