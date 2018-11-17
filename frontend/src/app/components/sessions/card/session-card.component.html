@@ -1,22 +1,47 @@
 <div class="card m-3 w-90">
   <div class="card-body">
+
     <h5 class="card-title" (click)="showDetails()">{{session.title}}</h5>
     <h6 class="card-subtitle mb-2 text-muted">{{session.speaker}} @ {{session.conference}}</h6>
+
     <p class="card-text">{{session.abstract}}
-      <br/>
+      <br />
       <small>Level: {{session.level}}</small>
     </p>
   </div>
-  <div class="card-footer text-muted">
-    <div class="float-right" *ngIf="votingSummary">
-      <div class="down-vote" (click)="voteDown()">
-        <span>{{votingSummary.downVotes}}</span>
+  <div class="card-footer text-muted d-flex flex-row-reverse">
+
+    <div class="p-2 vote-handle" *ngIf="votingSummary">
+      <button class="btn btn-sm btn-secondary" (click)="voteDown()">
+        <span class="mr-2">{{votingSummary.downVotes}}</span>
         <i class="fa fa-thumbs-down margin-right-wide"></i>
-      </div>
-      <div class="up-vote" (click)="voteUp()">
-        <span>{{votingSummary.upVotes}}</span>
+      </button>
+
+    </div>
+    <div class="p-2 vote-handle" *ngIf="votingSummary">
+      <button class="btn btn-sm btn-secondary" (click)="voteUp()">
+        <span class="mr-2">{{votingSummary.upVotes}}</span>
         <i class="fa fa-thumbs-up"></i>
+      </button>
+    </div>
+
+    <div class="p-2 flex-grow-1">
+      <div class="d-flex">
+        <div class="w-400 mr-2" *ngIf="isSharing">
+          <input type="email" class="form-control form-control-sm" placeholder="john.doe@mail.com" [(ngModel)]="target"/>
+        </div>
+        <div class="">
+          <button class="btn btn-sm btn-secondary" (click)="shareSession()">
+            <i class="fas fa-share-alt"></i>&nbsp;
+            <span *ngIf="!isSharing">share this session</span>
+            <span *ngIf="isSharing">send</span>
+          </button>
+          <i *ngIf="isSharing" class="ml-2 cancel fas fa-ban" (click)="isSharing=false"></i>
+
+        </div>
+        <div class="flex-fill "></div>
       </div>
     </div>
+
   </div>
 </div>

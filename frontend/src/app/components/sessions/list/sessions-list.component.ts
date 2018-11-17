@@ -13,10 +13,12 @@ export class SessionsListComponent implements OnInit {
     private readonly _router: Router,
     private readonly _route: ActivatedRoute,
     private readonly _sessionsService: SessionsService
-  ) {}
+  ) { }
 
   public ngOnInit() {
-    this._sessionsService.getAllSessions().subscribe(sessions => (this.sessions = sessions));
+    this._sessionsService
+      .getAllSessions()
+      .subscribe(sessions => (this.sessions = sessions));
   }
 
   public navigateToCreate() {

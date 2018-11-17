@@ -1,7 +1,5 @@
-import { Observable } from 'rxjs/Observable';
 import { VotingSummary } from '../models/votingSummary';
-import { Voting } from '../models/voting';
-import { mapTo } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 export abstract class VotingsService {
   public abstract getVotingSummary(sessionId: string): Observable<VotingSummary>;

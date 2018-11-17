@@ -3,10 +3,6 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from
 import { ActivatedRoute, Router } from '@angular/router';
 import { Session } from '../../../models/session';
 import { SessionsService } from '../../../services/sessions.service';
-import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
-import { SessionResolver } from '../../../resolvers/session.resolver';
-
 @Component({
   selector: 'sessions-sessiondetails',
   templateUrl: 'session-details.component.html',
@@ -19,7 +15,7 @@ export class SessionDetailsComponent implements OnInit {
     private readonly _sessionsService: SessionsService,
     private readonly _router: Router,
     private readonly _route: ActivatedRoute
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this._route.data.subscribe((data: { session: Session }) => {

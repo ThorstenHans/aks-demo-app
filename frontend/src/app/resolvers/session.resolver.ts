@@ -1,8 +1,8 @@
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Session } from '../models/session';
-import { Observable } from 'rxjs/Observable';
 import { SessionsService } from '../services/sessions.service';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SessionResolver implements Resolve<Session> {

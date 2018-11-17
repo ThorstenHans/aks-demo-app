@@ -1,29 +1,4 @@
-.margin-top {
-  margin-top: 40px;
-}
-
-.ng-dirty.ng-invalid:not(form) {
-  border-color: red;
-}
-
-.margin-right-wide {
-  margin-right: 20px;
-}
-
-.down-vote,
-.up-vote {
+.cancel{
   cursor: pointer;
-  display: inline;
-  color: #999;
-  -webkit-transition: color 1s ease-out;
-  -moz-transition: color 1s ease-out;
-  -o-transition: color 1s ease-out;
-  transition: color 1s ease-out;
-}
-
-.down-vote:hover {
-  color: orange;
-}
-.up-vote:hover {
-  color: #3399cc;
+  color:indianred;
 }

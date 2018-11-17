@@ -2,8 +2,7 @@ import { SessionsService } from '../sessions.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Session } from '../../models/session';
-import { Observable } from 'rxjs/Observable';
-import { mapTo } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SessionsServiceRef extends SessionsService {

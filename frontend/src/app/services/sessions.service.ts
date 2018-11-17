@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs/Observable';
 import { Session } from '../models/session';
+import { Observable } from 'rxjs';
 
 export abstract class SessionsService {
   public abstract getAllSessions(): Observable<Array<Session>>;

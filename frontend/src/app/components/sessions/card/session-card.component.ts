@@ -4,17 +4,21 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { VotingsService } from '../../../services/votings.service';
 import { tap, take } from 'rxjs/operators';
 import { VotingSummary } from '../../../models/votingSummary';
+import { ShareService } from 'src/app/services/share.service';
 
 @Component({
   selector: 'sessions-sessioncard',
   templateUrl: 'session-card.component.html',
 })
 export class SessionCardComponent implements OnInit {
+  public isSharing = false;
+  public target: string = null;
   constructor(
     private readonly _votingsService: VotingsService,
+    private readonly _shareService: ShareService,
     private readonly _router: Router,
     private readonly _route: ActivatedRoute
-  ) {}
+  ) { }
 
   @Input() public session: Session;
   public votingSummary: VotingSummary;
@@ -63,5 +67,18 @@ export class SessionCardComponent implements OnInit {
         })
       )
       .subscribe(null, null, () => (this._voted = true));
+  }
+
+  public shareSession(): void {
+    if (!this.isSharing) {
+      this.isSharing = true;
+      return;
+    }
+    this._shareService
+      .shareSession(this.target, this.session)
+      .subscribe(() => {
+        this.isSharing = false;
+        this.target = null;
+      });
   }
 }
