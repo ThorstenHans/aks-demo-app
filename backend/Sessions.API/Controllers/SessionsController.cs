@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Sessions.API.Repositories;
 using Sessions.API.Repositories.Contracts;
-using Sessions.API.Services;
 using Sessions.Models;
 
 namespace Sessions.API.Controllers {
@@ -11,10 +10,8 @@ namespace Sessions.API.Controllers {
     [Route ("api/sessions")]
     public class SessionsController : Controller {
         private readonly ISessionsRepository _repository;
-        private readonly ExportService _exportService;
-        public SessionsController (ISessionsRepository repository, ExportService exportService) {
+        public SessionsController (ISessionsRepository repository) {
             _repository = repository;
-            _exportService = exportService;
         }
 
         /// <summary>
@@ -69,7 +66,6 @@ namespace Sessions.API.Controllers {
                 if (session == null) {
                     return NotFound ();
                 }
-                _exportService.ExportSession (session);
                 return Ok ();
             } catch (Exception) {
                 return StatusCode (500);
