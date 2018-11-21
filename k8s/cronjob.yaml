@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
     name: auditlog-cleaner
 spec:
-    schedule: "@every_minute"
+    schedule: "* * * * *"
     jobTemplate:
         spec:
             template:
