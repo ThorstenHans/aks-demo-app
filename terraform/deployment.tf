@@ -6,6 +6,15 @@ resource "azurerm_resource_group" "demo" {
   tags     = "${var.tags}"
 }
 
+resource "azurerm_storage_account" "demo" {
+  name                     = "thhsessionexports"
+  resource_group_name      = "${azurerm_resource_group.demo.name}"
+  location                 = "${azurerm_resource_group.demo.location}"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+  tags                     = "${var.tags}"
+}
+
 resource "azurerm_sql_server" "demo" {
   name                         = "thh-demo-sql-server"
   resource_group_name          = "${azurerm_resource_group.demo.name}"
@@ -31,7 +40,6 @@ resource "azurerm_container_registry" "demo" {
   admin_enabled       = false
   sku                 = "${var.acr_sku}"
   tags                = "${var.tags}"
-  depends_on          = ["azurerm_kubernetes_cluster.demo"]
 }
 
 resource "azurerm_storage_account" "azfnstorage" {
@@ -60,15 +68,18 @@ resource "azurerm_function_app" "azfnapp" {
   location                  = "${azurerm_resource_group.demo.location}"
   storage_connection_string = "${azurerm_storage_account.azfnstorage.primary_connection_string}"
   app_service_plan_id       = "${azurerm_app_service_plan.azfnappsvcplan.id}"
+  version                   = "beta"
 
+  app_settings {
+    APPINSIGHTS_INSTRUMENTATIONKEY = "${var.appinsights_key}"
+    SendGridKey                    = "${var.sendgrid_key}"
+  }
 }
 
 resource "azurerm_kubernetes_cluster" "demo" {
-    count = 0
   name                = "${var.aks_name}"
   location            = "${azurerm_resource_group.demo.location}"
   resource_group_name = "${azurerm_resource_group.demo.name}"
-  kubernetes_version  = "${var.k8s_version}"
 
   linux_profile {
     admin_username = "azureuser"
