@@ -72,7 +72,7 @@ export class SessionCardComponent implements OnInit {
   }
 
   public exportSession(): void {
-
+    this._exportService.exportSession(this.session.id).subscribe();
   }
   public shareSession(): void {
     if (!this.isSharing) {
