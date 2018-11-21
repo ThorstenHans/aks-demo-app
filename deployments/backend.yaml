@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: deployment-sessions
+    name: sessions-ms-deployment
 spec:
     replicas: 3
     selector:
@@ -10,15 +10,13 @@ spec:
             ms: sessions
     template:
         metadata:
-            name: sessions-ms
             labels:
-                app: sessions
                 tier: backend
                 ms: sessions
         spec:
             containers:
                 - name: sesssions-microservice
-                  image: thhdemo.azurecr.io/sessions:latest
+                  image: thhdemo.azurecr.io/sessions-ms:latest
                   env:
                       - name: ASPNETCORE_URLS
                         value: http://*:8080
@@ -27,6 +25,8 @@ spec:
                             secretKeyRef:
                                 name: backendsecret
                                 key: db
+                      - name: ExportFolder
+                        value: /var/session-exports
                   ports:
                       - containerPort: 8080
                   livenessProbe:
@@ -54,7 +54,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: deployment-votings
+    name: votings-ms-deployment
 spec:
     replicas: 3
     selector:
@@ -65,13 +65,12 @@ spec:
         metadata:
             name: votings-ms
             labels:
-                app: sessions
                 tier: backend
                 ms: votings
         spec:
             containers:
                 - name: votings-microservice
-                  image: thhdemo.azurecr.io/votings:latest
+                  image: thhdemo.azurecr.io/votings-ms:latest
                   env:
                       - name: ASPNETCORE_URLS
                         value: http://*:8080

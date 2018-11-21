@@ -1,19 +1,17 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-    name: sessions-auditlog-cleaner
-    labels:
-        app: sessions
+    name: auditlog-cleaner
 spec:
-    schedule: "* * * * *"
+    schedule: "@every_minute"
     jobTemplate:
         spec:
             template:
                 spec:
                     restartPolicy: Never
                     containers:
-                        - name: sessions-auditlog-cleaner
-                          image: thhdemo.azurecr.io/sessions-auditlog-cleaner:1.0.0
+                        - name: auditlog-cleaner
+                          image: thhdemo.azurecr.io/auditlog-cleaner:latest
                           env:
                             - name: DbConnectionString
                               valueFrom:

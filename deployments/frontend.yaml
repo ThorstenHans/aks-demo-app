@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: deployment-frontend
+    name: sessionbrowser-deployment
 spec:
-    replicas: 1
+    replicas: 2
     selector:
         matchLabels:
             app: sessions
@@ -16,8 +16,8 @@ spec:
                 tier: frontend
         spec:
             containers:
-                - name: spa
-                  image: thhdemo.azurecr.io/frontend:latest
+                - name: sessionbrowser
+                  image: thhdemo.azurecr.io/sessionbrowser:latest
                   ports:
                       - containerPort: 80
                   resources:
