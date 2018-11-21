@@ -25,8 +25,6 @@ spec:
                             secretKeyRef:
                                 name: backendsecret
                                 key: db
-                      - name: ExportFolder
-                        value: /var/session-exports
                   ports:
                       - containerPort: 8080
                   livenessProbe:
@@ -104,4 +102,61 @@ spec:
                           cpu: '125m'
 
 ---
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: export-ms-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            tier: backend
+            ms: export
+    template:
+        metadata:
+            labels:
+                tier: backend
+                ms: export
+        spec:
+            volumes:
+                - name: volume
+                  persistentVolumeClaim:
+                    claimName: azure-fileshare
+            containers:
+                - name: export-microservice
+                  image: thhdemo.azurecr.io/export-ms:latest
+                  env:
+                      - name: ASPNETCORE_URLS
+                        value: http://*:8080
+                      - name: DbConnectionString
+                        valueFrom:
+                            secretKeyRef:
+                                name: backendsecret
+                                key: db
+                  ports:
+                      - containerPort: 8080
+                  volumeMounts:
+                    - mountPath: "/var/session-exports"
+                      name: volume
+                  livenessProbe:
+                      httpGet:
+                          path: /api/meta/healthy
+                          port: 8080
+                      initialDelaySeconds: 30
+                      timeoutSeconds: 4
+                      periodSeconds: 5
+                  readinessProbe:
+                      httpGet:
+                          path: /api/meta/ready
+                          port: 8080
+                      initialDelaySeconds: 30
+                      timeoutSeconds: 4
+                      periodSeconds: 5
+                  resources:
+                      requests:
+                          memory: '64Mi'
+                          cpu: '64m'
+                      limits:
+                          memory: '96Mi'
+                          cpu: '125m'
+---
