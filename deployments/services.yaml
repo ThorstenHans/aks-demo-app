@@ -8,7 +8,7 @@ spec:
         ms: sessions
     ports:
         - protocol: TCP
-          port: 80
+          port: 8080
           targetPort: 8080
 ---
 apiVersion: v1
@@ -21,7 +21,7 @@ spec:
         ms: votings
     ports:
         - protocol: TCP
-          port: 80
+          port: 8080
           targetPort: 8080
 ---
 apiVersion: v1
@@ -34,7 +34,7 @@ spec:
         ms: export
     ports:
         - protocol: TCP
-          port: 80
+          port: 8080
           targetPort: 8080
 ---
 apiVersion: v1

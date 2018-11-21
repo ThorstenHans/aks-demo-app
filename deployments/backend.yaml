@@ -18,6 +18,11 @@ spec:
                 - name: sesssions-microservice
                   image: thhdemo.azurecr.io/sessions-ms:latest
                   env:
+                      - name: APPINSIGHTS_INSTRUMENTATIONKEY
+                        valueFrom:
+                            secretKeyRef:
+                                name: backendsecret
+                                key: ai_key
                       - name: ASPNETCORE_URLS
                         value: http://*:8080
                       - name: DbConnectionString
@@ -70,6 +75,11 @@ spec:
                 - name: votings-microservice
                   image: thhdemo.azurecr.io/votings-ms:latest
                   env:
+                      - name: APPINSIGHTS_INSTRUMENTATIONKEY
+                        valueFrom:
+                            secretKeyRef:
+                                name: backendsecret
+                                key: ai_key
                       - name: ASPNETCORE_URLS
                         value: http://*:8080
                       - name: DbConnectionString
@@ -119,13 +129,20 @@ spec:
                 ms: export
         spec:
             volumes:
-                - name: volume
-                  persistentVolumeClaim:
-                    claimName: azure-fileshare
+                - name: azurefileshare
+                  azureFile:
+                    secretName: backendsecret
+                    shareName: session-exports
+                    readOnly: false
             containers:
                 - name: export-microservice
                   image: thhdemo.azurecr.io/export-ms:latest
                   env:
+                      - name: APPINSIGHTS_INSTRUMENTATIONKEY
+                        valueFrom:
+                            secretKeyRef:
+                                name: backendsecret
+                                key: ai_key
                       - name: ASPNETCORE_URLS
                         value: http://*:8080
                       - name: DbConnectionString
@@ -137,21 +154,20 @@ spec:
                       - containerPort: 8080
                   volumeMounts:
                     - mountPath: "/var/session-exports"
-                      name: volume
+                      name: azurefileshare
                   livenessProbe:
                       httpGet:
                           path: /api/meta/healthy
                           port: 8080
-                      initialDelaySeconds: 30
-                      timeoutSeconds: 4
-                      periodSeconds: 5
+                      initialDelaySeconds: 10
+                      timeoutSeconds: 2
+                      periodSeconds: 30
                   readinessProbe:
                       httpGet:
                           path: /api/meta/ready
                           port: 8080
-                      initialDelaySeconds: 30
-                      timeoutSeconds: 4
-                      periodSeconds: 5
+                      initialDelaySeconds: 10
+                      timeoutSeconds: 5
                   resources:
                       requests:
                           memory: '64Mi'
