@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.0-sdk as build-env
+FROM microsoft/dotnet:2.1-sdk as build-env
 LABEL maintainer="Thorsten Hans <thorsten.hans@thinktecture.com>"
 
 WORKDIR /app
@@ -15,7 +15,7 @@ COPY ./Sessions.Models /app/Sessions.Models
 
 RUN cd Sessions.AuditLogClearer && dotnet publish -c Debug -o /app/out
 
-FROM microsoft/dotnet:2.0-runtime
+FROM microsoft/dotnet:2.1-runtime
 WORKDIR /app
 COPY --from=build-env /app/out .
 
