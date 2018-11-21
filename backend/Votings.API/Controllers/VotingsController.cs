@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -13,12 +15,13 @@ namespace SessionsVoting.API.Controllers
     public class VotingsController : Controller
     {
         private IVotingsService Service { get; }
+        private readonly TelemetryClient _telemetryClient = new TelemetryClient();
 
         public VotingsController(IVotingsService service)
         {
             Service = service;
         }
-        
+
         [Route("{sessionId}")]
         [HttpGet]
         public IActionResult GetVotingSummary(Guid sessionId)
@@ -27,10 +30,12 @@ namespace SessionsVoting.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             if (sessionId == Guid.Empty)
             {
                 return BadRequest("SessionId is an empty Guid");
             }
+
             try
             {
                 var votings = Service.GetVotingsBySessionId(sessionId).ToList();
@@ -49,6 +54,7 @@ namespace SessionsVoting.API.Controllers
                 return BadRequest();
             }
         }
+
         [Route("{sessionId}")]
         [HttpPost]
         public IActionResult Vote(Guid sessionId, [FromBody] VotingModel votingModel)
@@ -57,6 +63,7 @@ namespace SessionsVoting.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             if (sessionId == Guid.Empty || votingModel == null)
             {
                 return BadRequest();
@@ -72,14 +79,22 @@ namespace SessionsVoting.API.Controllers
                     Value = votingModel.Change
                 };
                 Service.AddVoting(sessionId, voting);
+                _telemetryClient.TrackEvent("VotedForSession", new Dictionary<string, string>
+                {
+                    {"sessionId", sessionId.ToString()},
+                    {"change", votingModel.Change.ToString()}
+                });
                 return Ok(new {Success = true});
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return BadRequest();
+                _telemetryClient.TrackException(exception);
+                return StatusCode(500);
+            }
+            finally
+            {
+                _telemetryClient.Flush();
             }
         }
-        
-        
     }
 }

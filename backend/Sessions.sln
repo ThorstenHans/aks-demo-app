@@ -39,6 +39,8 @@ EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sessions.Share", "Sessions.Share\Sessions.Share.csproj", "{D8CA7E45-9ABA-498A-AEBF-9F6E2F158ED5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Export.API", "Export.API\Export.API.csproj", "{74E46905-95A0-45EA-86C6-0C809B9B31DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{D8CA7E45-9ABA-498A-AEBF-9F6E2F158ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8CA7E45-9ABA-498A-AEBF-9F6E2F158ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8CA7E45-9ABA-498A-AEBF-9F6E2F158ED5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74E46905-95A0-45EA-86C6-0C809B9B31DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74E46905-95A0-45EA-86C6-0C809B9B31DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74E46905-95A0-45EA-86C6-0C809B9B31DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74E46905-95A0-45EA-86C6-0C809B9B31DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{5D6D6D4F-1FF6-479A-B093-0AE2658D7D13} = {C0517F47-EF6A-46FE-B870-15A9035D68F1}
 		{8C00DBE3-6C81-439A-94C3-FD95EDC98C74} = {992D4156-A771-4FEF-88F4-068962F10518}
 		{D8CA7E45-9ABA-498A-AEBF-9F6E2F158ED5} = {992D4156-A771-4FEF-88F4-068962F10518}
+		{74E46905-95A0-45EA-86C6-0C809B9B31DD} = {992D4156-A771-4FEF-88F4-068962F10518}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {840F94B0-AF23-48A6-9B46-8125C402FD96}

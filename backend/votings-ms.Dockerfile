@@ -17,7 +17,7 @@ RUN cd Votings.API && dotnet publish -c Debug -o /app/out
 
 FROM microsoft/dotnet:2.1-aspnetcore-runtime
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8080
 COPY --from=build-env /app/out .
 
 CMD ["dotnet", "Votings.API.dll"]
