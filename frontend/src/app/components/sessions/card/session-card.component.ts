@@ -5,6 +5,7 @@ import { VotingsService } from '../../../services/votings.service';
 import { tap, take } from 'rxjs/operators';
 import { VotingSummary } from '../../../models/votingSummary';
 import { ShareService } from 'src/app/services/share.service';
+import { ExportService } from 'src/app/services/export.service';
 
 @Component({
   selector: 'sessions-sessioncard',
@@ -16,6 +17,7 @@ export class SessionCardComponent implements OnInit {
   constructor(
     private readonly _votingsService: VotingsService,
     private readonly _shareService: ShareService,
+    private readonly _exportService: ExportService,
     private readonly _router: Router,
     private readonly _route: ActivatedRoute
   ) { }
@@ -69,6 +71,9 @@ export class SessionCardComponent implements OnInit {
       .subscribe(null, null, () => (this._voted = true));
   }
 
+  public exportSession(): void {
+
+  }
   public shareSession(): void {
     if (!this.isSharing) {
       this.isSharing = true;

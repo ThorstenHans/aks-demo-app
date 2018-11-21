@@ -14,7 +14,7 @@ export class ShareServiceRef extends ShareService {
   }
   public shareSession(mail: string, session: Session): Observable<any> {
 
-    return this._http.post(environment.functionUrl, {target: mail, sesison: session} );
+    return this._http.post(environment.functionUrl, {target: mail, session: session} );
   }
 
 }
