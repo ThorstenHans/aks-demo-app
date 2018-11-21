@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  functionUrl: ''
+  functionUrl: 'https://thh-aks-demo-azfn-app.azurewebsites.net/api/share'
 };
 
 /*
