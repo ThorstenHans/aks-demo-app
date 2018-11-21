@@ -34,7 +34,37 @@ resource "azurerm_container_registry" "demo" {
   depends_on          = ["azurerm_kubernetes_cluster.demo"]
 }
 
+resource "azurerm_storage_account" "azfnstorage" {
+  name                     = "thhaksdemostorage"
+  resource_group_name      = "${azurerm_resource_group.demo.name}"
+  location                 = "${azurerm_resource_group.demo.location}"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+resource "azurerm_app_service_plan" "azfnappsvcplan" {
+  name                = "thh-aks-demo-azfn-app-svc-plan"
+  resource_group_name = "${azurerm_resource_group.demo.name}"
+  location            = "${azurerm_resource_group.demo.location}"
+  kind                = "FunctionApp"
+
+  sku {
+    tier = "Dynamic"
+    size = "Y1"
+  }
+}
+
+resource "azurerm_function_app" "azfnapp" {
+  name                      = "thh-aks-demo-azfn-app"
+  resource_group_name       = "${azurerm_resource_group.demo.name}"
+  location                  = "${azurerm_resource_group.demo.location}"
+  storage_connection_string = "${azurerm_storage_account.azfnstorage.primary_connection_string}"
+  app_service_plan_id       = "${azurerm_app_service_plan.azfnappsvcplan.id}"
+
+}
+
 resource "azurerm_kubernetes_cluster" "demo" {
+    count = 0
   name                = "${var.aks_name}"
   location            = "${azurerm_resource_group.demo.location}"
   resource_group_name = "${azurerm_resource_group.demo.name}"
