@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Sessions.API.Database;
 using Sessions.API.Repositories;
 using Sessions.API.Repositories.Contracts;
+using Sessions.API.Services;
 using Sessions.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -16,7 +17,7 @@ namespace Sessions.API
 {
     public class Startup
     {
-        
+
         public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
@@ -45,6 +46,7 @@ namespace Sessions.API
                 options.UseSqlServer(Configuration.GetValue<string>(Constants.DbConnectionStringPropertyName)));
 
             services.AddTransient<ISessionsRepository, SessionsRepository>();
+            services.AddSingleton<ExportService>();
             if (HostingEnvironment.IsDevelopment())
             {
                 services.AddSwaggerGen(c =>

@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Sessions.Models;
 using Sessions.API.Repositories;
 using Sessions.API.Repositories.Contracts;
+using Sessions.API.Services;
+using Sessions.Models;
 
-namespace Sessions.API.Controllers
-{
-    [Produces("application/json")]
-    [Route("api/sessions")]
-    public class SessionsController : Controller
-    {
-        private ISessionsRepository Repository { get; }
-        public SessionsController(ISessionsRepository repository)
-        {
-            Repository = repository;
+namespace Sessions.API.Controllers {
+    [Produces ("application/json")]
+    [Route ("api/sessions")]
+    public class SessionsController : Controller {
+        private readonly ISessionsRepository _repository;
+        private readonly ExportService _exportService;
+        public SessionsController (ISessionsRepository repository, ExportService exportService) {
+            _repository = repository;
+            _exportService = exportService;
         }
-    
+
         /// <summary>
         /// Returns a list containing all sessions
         /// </summary>
@@ -28,119 +28,115 @@ namespace Sessions.API.Controllers
         /// <response code="200">Returns the list of sessions</response>
         /// <response code="500">If reading from database failed</response>
         [HttpGet]
-        [ProducesResponseType(typeof(List<Session>), 200)]
-        [ProducesResponseType(500)]
-        public IActionResult GetAll()
-        {
-            return Ok(Repository.GetSessions());
+        [ProducesResponseType (typeof (List<Session>), 200)]
+        [ProducesResponseType (500)]
+        public IActionResult GetAll () {
+            return Ok (_repository.GetSessions ());
         }
 
         /// <summary>
         /// Returns a session
-        /// </summary> 
+        /// </summary>
         /// <returns>A sessio object</returns>
         /// <response code="200">Returns the session object</response>
         /// <response code="404">If no session has matching Id</response>
         /// <response code="500">If reading from database failed</response>
-        [Route("{id}")]
+        [Route ("{id}")]
         [HttpGet]
-        [ProducesResponseType(typeof(Session), 200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
-        public IActionResult GetSessionById(Guid id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+        [ProducesResponseType (typeof (Session), 200)]
+        [ProducesResponseType (404)]
+        [ProducesResponseType (500)]
+        public IActionResult GetSessionById (Guid id) {
+            if (!ModelState.IsValid) {
+                return BadRequest (ModelState);
             }
-            try
-            {
-                var session = Repository.GetSessionById(id);
-                return Ok(session);
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return NotFound();
+            try {
+                var session = _repository.GetSessionById (id);
+                return Ok (session);
+            } catch (IndexOutOfRangeException) {
+                return NotFound ();
             }
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(Session), 201)]
-        [ProducesResponseType(500)]
-        [ProducesResponseType(400)]
-        public IActionResult Create([FromBody] Session session)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+        [Route ("export/{id}")]
+        public IActionResult Export (Guid id) {
+            if (!ModelState.IsValid) {
+                return BadRequest (ModelState);
             }
-            if (session == null)
-            {
-                return BadRequest("Sesssion Model is Null");
+            try {
+                var session = _repository.GetSessionById (id);
+                if (session == null) {
+                    return NotFound ();
+                }
+                _exportService.ExportSession (session);
+                return Ok ();
+            } catch (Exception) {
+                return StatusCode (500);
             }
-            var newSession = Repository.AddSession(session);
-            return StatusCode(201, newSession);
         }
 
-        [Route("{id}")]
+        [HttpPost]
+        [ProducesResponseType (typeof (Session), 201)]
+        [ProducesResponseType (500)]
+        [ProducesResponseType (400)]
+        public IActionResult Create ([FromBody] Session session) {
+            if (!ModelState.IsValid) {
+                return BadRequest (ModelState);
+            }
+            if (session == null) {
+                return BadRequest ("Sesssion Model is Null");
+            }
+            var newSession = _repository.AddSession (session);
+            return StatusCode (201, newSession);
+        }
+
+        [Route ("{id}")]
         [HttpPut]
-        [ProducesResponseType(typeof(Session), 200)]
-        [ProducesResponseType(500)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
-        public IActionResult Update(Guid id, [FromBody] Session session)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+        [ProducesResponseType (typeof (Session), 200)]
+        [ProducesResponseType (500)]
+        [ProducesResponseType (400)]
+        [ProducesResponseType (404)]
+        public IActionResult Update (Guid id, [FromBody] Session session) {
+            if (!ModelState.IsValid) {
+                return BadRequest (ModelState);
             }
 
-            if (id == Guid.Empty)
-            {
-                return BadRequest("Guid is empty.");
+            if (id == Guid.Empty) {
+                return BadRequest ("Guid is empty.");
             }
 
-            if (session == null)
-            {
-                return BadRequest("Session instance is null");
+            if (session == null) {
+                return BadRequest ("Session instance is null");
             }
 
-            try
-            {
-                var updatedSession = Repository.UpdateSession(id, session);
-                return Ok(updatedSession);
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return NotFound();
+            try {
+                var updatedSession = _repository.UpdateSession (id, session);
+                return Ok (updatedSession);
+            } catch (IndexOutOfRangeException) {
+                return NotFound ();
             }
         }
 
-        [Route("{id}")]
+        [Route ("{id}")]
         [HttpDelete]
-        [ProducesResponseType(204)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
-        public IActionResult Delete(Guid id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+        [ProducesResponseType (204)]
+        [ProducesResponseType (400)]
+        [ProducesResponseType (404)]
+        [ProducesResponseType (500)]
+        public IActionResult Delete (Guid id) {
+            if (!ModelState.IsValid) {
+                return BadRequest (ModelState);
             }
-            if (id == Guid.Empty)
-            {
-                return BadRequest("Guid is empty.");
+            if (id == Guid.Empty) {
+                return BadRequest ("Guid is empty.");
             }
 
-            try
-            {
-                Repository.DeleteSession(id);
-                return StatusCode(204);
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return NotFound();
+            try {
+                _repository.DeleteSession (id);
+                return StatusCode (204);
+            } catch (IndexOutOfRangeException) {
+                return NotFound ();
             }
         }
     }
