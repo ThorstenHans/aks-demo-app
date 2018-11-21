@@ -13,7 +13,7 @@ namespace Sessions.Share {
     public static class ShareSession {
         [FunctionName ("ShareSession")]
         public static IActionResult Run (
-            [HttpTrigger (AuthorizationLevel.Anonymous, "POST", Route = "share")] ShareRequest shareRequest, [SendGrid (ApiKey = "SendGridKey")] out SendGridMessage message,
+            [HttpTrigger (AuthorizationLevel.Anonymous, "POST", "OPTIONS", Route = "share")] ShareRequest shareRequest, [SendGrid (ApiKey = "SendGridKey")] out SendGridMessage message,
             ILogger log) {
 
             if (shareRequest == null || !shareRequest.IsValid ()) {
