@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.0.5-sdk-2.1.4 as build-env
+FROM microsoft/dotnet:2.1-sdk as build-env
 LABEL maintainer="Thorsten Hans <thorsten.hans@thinktecture.com>"
 
 WORKDIR /app
@@ -15,7 +15,7 @@ COPY ./Sessions.Models /app/Sessions.Models
 
 RUN cd Votings.API && dotnet publish -c Debug -o /app/out
 
-FROM microsoft/aspnetcore:2.0.5
+FROM microsoft/dotnet:2.1-aspnetcore-runtime
 WORKDIR /app
 EXPOSE 80
 COPY --from=build-env /app/out .
