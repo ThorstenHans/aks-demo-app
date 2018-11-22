@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: export-ms-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            tier: backend
+            ms: export
+    template:
+        metadata:
+            labels:
+                tier: backend
+                ms: export
+        spec:
+            volumes:
+                - name: azurefileshare
+                  azureFile:
+                    secretName: backendsecret
+                    shareName: session-exports
+                    readOnly: false
+            containers:
+                - name: export-microservice
+                  image: thhdemo.azurecr.io/export-ms:latest
+                  env:
+                      - name: APPINSIGHTS_INSTRUMENTATIONKEY
+                        valueFrom:
+                            secretKeyRef:
+                                name: backendsecret
+                                key: ai_key
+                      - name: ASPNETCORE_URLS
+                        value: http://*:8080
+                      - name: DbConnectionString
+                        valueFrom:
+                            secretKeyRef:
+                                name: backendsecret
+                                key: db
+                  ports:
+                      - containerPort: 8080
+                  volumeMounts:
+                    - mountPath: "/var/session-exports"
+                      name: azurefileshare
+                  livenessProbe:
+                      httpGet:
+                          path: /api/meta/healthy
+                          port: 8080
+                      initialDelaySeconds: 10
+                      timeoutSeconds: 2
+                      periodSeconds: 30
+                  readinessProbe:
+                      httpGet:
+                          path: /api/meta/ready
+                          port: 8080
+                      initialDelaySeconds: 10
+                      timeoutSeconds: 5
+                  resources:
+                      requests:
+                          memory: '64Mi'
+                          cpu: '64m'
+                      limits:
+                          memory: '96Mi'
+                          cpu: '125m'

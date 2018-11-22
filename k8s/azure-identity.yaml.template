@@ -1,0 +1,10 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: aad-identity
+spec:
+  type: 0
+  ResourceID: << ID of your Azure Identity>>
+  ClientID: << client ID of your Azure Identity >>
+
+

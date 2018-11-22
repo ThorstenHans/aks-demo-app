@@ -1,0 +1,33 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+    name: auditlog-cleaner
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            aadpodidbinding: backend
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: auditlog-cleaner
+              image: thhdemo.azurecr.io/auditlog-cleaner:latest
+              volumeMounts:
+              - name: kv
+                mountPath: /kv/db
+                readOnly: true
+          volumes:
+            - name: kv
+              flexVolume:
+                driver: "azure/kv"
+                options:
+                  usepodidentity: "true"
+                  keyvaultname: thhaksdemokv
+                  keyvaultobjectname: connectionstring
+                  keyvaultobjecttype: secret
+                  resourcegroup: thh
+                  subscriptionid: << YOUR SUBSCRIPTION ID >>
+                  tenantid: << YOUR TENANT ID >> 
