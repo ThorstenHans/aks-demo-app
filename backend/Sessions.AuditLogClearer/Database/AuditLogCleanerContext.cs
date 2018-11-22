@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Sessions.Models;
 
@@ -8,10 +9,10 @@ namespace Sessions.AuditLogClearer.Database
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = Environment.GetEnvironmentVariable(Constants.DbConnectionStringPropertyName);
+            var connectionString = File.ReadAllText("/kv/db/connectionstring");
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new ApplicationException($"ConnectionString for Sessions Database not found in ENV '{Constants.DbConnectionStringPropertyName}'");
+                throw new ApplicationException($"ConnectionString for Sessions Database not found in /kv/db/connectionstring");
             }
             optionsBuilder.UseSqlServer(connectionString);
         }
