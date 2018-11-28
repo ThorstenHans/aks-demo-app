@@ -1,7 +1,5 @@
 # AKS Demo App
 
-# README IS OUTDATED UPDATE BEFORE 2018/11/27
-
 ## A simple .NET Core / Angular application
 
 `aks-demo-app` is a simple application to demonstrate basic concepts of [kubernetes](http://kubernetes.io) (k8s) and Azure Kubernetes Services (AKS). The app consists of four Docker images and a SQL database. The SQL database won't be hosted inside of k8s, instead Microsoft's PaaS offering (SQL Azure) is used. The Sample is licensed under [MIT](./LICENSE)
