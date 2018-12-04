@@ -1,52 +1,55 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: sessions-ms-svc
+  name: sessions-ms-svc
 spec:
-    selector:
-        tier: backend
-        ms: sessions
-    ports:
-        - protocol: TCP
-          port: 8080
-          targetPort: 8080
+  type: ClusterIP
+  selector:
+    tier: backend
+    ms: sessions
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-    name: votings-ms-svc
+  name: votings-ms-svc
 spec:
-    selector:
-        tier: backend
-        ms: votings
-    ports:
-        - protocol: TCP
-          port: 8080
-          targetPort: 8080
+  type: ClusterIP
+  selector:
+    tier: backend
+    ms: votings
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-    name: export-ms-svc
+  name: export-ms-svc
 spec:
-    selector:
-        tier: backend
-        ms: export
-    ports:
-        - protocol: TCP
-          port: 8080
-          targetPort: 8080
+  type: ClusterIP
+  selector:
+    tier: backend
+    ms: export
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-    name: sessions-spa-svc
+  name: sessions-spa-svc
 spec:
-    type: LoadBalancer
-    selector:
-        app: sessions
-        tier: frontend
-    ports:
-        - protocol: TCP
-          port: 80
-          targetPort: 80
+  type: LoadBalancer
+  selector:
+    app: sessions
+    tier: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
