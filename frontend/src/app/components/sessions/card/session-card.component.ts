@@ -60,7 +60,7 @@ export class SessionCardComponent implements OnInit {
       return;
     }
     this._votingsService
-      .voteUp(this.session.id)
+      .voteDown(this.session.id)
       .pipe(
         tap(success => {
           if (success) {

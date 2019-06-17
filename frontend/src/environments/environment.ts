@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  name: 'Development',
   production: false,
   functionUrl: 'https://thh-aks-demo-azfn-app.azurewebsites.net/api/share'
 };
