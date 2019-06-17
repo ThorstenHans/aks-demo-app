@@ -1,7 +1,6 @@
 ﻿ 
 using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.Converters;
 using Sessions.Models;
 
 namespace Sessions.Migrations.Database

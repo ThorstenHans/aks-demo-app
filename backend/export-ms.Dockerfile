@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-sdk as build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build-env
 LABEL maintainer="Thorsten Hans <thorsten.hans@thinktecture.com>"
 
 WORKDIR /app
@@ -15,7 +15,7 @@ COPY ./Sessions.Models /app/Sessions.Models
 
 RUN cd Export.API && dotnet publish -c Debug -o /app/out
 
-FROM microsoft/dotnet:2.1-aspnetcore-runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
 WORKDIR /app
 EXPOSE 8080
 COPY --from=build-env /app/out .

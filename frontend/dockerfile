@@ -2,7 +2,7 @@
 ARG env=production
 ARG sourcemaps=false
 
-FROM node:latest as builder
+FROM node:10.16-alpine as builder
 WORKDIR /app
 COPY package.json /app/
 RUN npm install

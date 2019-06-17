@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using Sessions.API.Database;
 using Sessions.API.Repositories;
 using Sessions.API.Repositories.Contracts;
-using Sessions.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Sessions.API
@@ -42,7 +41,7 @@ namespace Sessions.API
                 });
             services.AddCors();
             services.AddDbContext<SessionsContext>(options =>
-                options.UseSqlServer(Configuration.GetValue<string>(Constants.DbConnectionStringPropertyName)));
+                options.UseSqlServer(Configuration.GetValue<string>(Sessions.Models.Constants.DbConnectionStringPropertyName)));
 
             services.AddTransient<ISessionsRepository, SessionsRepository>();
             if (HostingEnvironment.IsDevelopment())
