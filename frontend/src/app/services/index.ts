@@ -6,7 +6,7 @@ import { ShareService } from './share.service';
 import { ShareServiceRef } from './ref/share.service.ref';
 import { ExportService } from './export.service';
 import { ExportServiceRef } from './ref/export.service.ref';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { SessionsServiceMock } from './mocks/sessions.service.mock';
 import { HttpClient } from '@angular/common/http';
 import { ShareServiceMock } from './mocks/share.service.mock';

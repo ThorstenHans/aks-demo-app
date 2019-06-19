@@ -40,4 +40,4 @@ echo -e "Deploying Services"
 kubectl create -f services.yaml -n $1
 
 echo -e "Watching services..."
-kubectl get svc -w
+kubectl get svc -n $1 -w

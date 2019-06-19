@@ -49,17 +49,17 @@ spec:
           resources:
             requests:
               memory: "64Mi"
-              cpu: "64m"
+              cpu: "0.1"
             limits:
               memory: "96Mi"
-              cpu: "125m"
+              cpu: "0.2"
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: votings-ms-deployment
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       tier: backend
@@ -71,15 +71,6 @@ spec:
         tier: backend
         ms: votings
     spec:
-      nodeSelector:
-        beta.kubernetes.io/os: linux
-        kubernetes.io/role: agent
-        type: virtual-kubelet
-      tolerations:
-        - key: virtual-kubelet.io/provider
-          operator: Equal
-          value: azure
-          effect: NoSchedule
       imagePullSecrets:
         - name: acr-auth
       containers:
@@ -116,8 +107,8 @@ spec:
             periodSeconds: 5
           resources:
             requests:
-              memory: "1G"
-              cpu: "1"
+              memory: "96Mi"
+              cpu: "0.1"
             limits:
-              memory: "1G"
-              cpu: "1"
+              memory: "128Mi"
+              cpu: "0.2"
